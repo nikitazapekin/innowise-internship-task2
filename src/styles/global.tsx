@@ -1,30 +1,31 @@
-import {  GlobalStyles } from "@mui/material";
+import { GlobalStyles } from "@mui/material";
 import theme from "./theme";
 
-const customGlobalStyles = (
+export const customGlobalStyles = (
   <GlobalStyles
     styles={{
       "*": {
         boxSizing: "border-box",
+        margin: 0,
+        padding: 0,
       },
       body: {
-        scrollBehavior: "smooth",
-        textRendering: "optimizeSpeed",
-    
+        fontFamily: theme.fontFamilies.primary,
+        fontSize: theme.fontSizes.sm,
       },
 
       "::-webkit-scrollbar": {
         width: "8px",
       },
       "::-webkit-scrollbar-track": {
-        background: theme.palette.background.default,
+        background: theme.colors.main,
       },
       "::-webkit-scrollbar-thumb": {
-        background: theme.palette.primary.main,
+        background: theme.colors.light,
         borderRadius: "4px",
       },
       "::-webkit-scrollbar-thumb:hover": {
-        background: theme.palette.primary.dark,
+        background: theme.colors.light,
       },
     }}
   />
