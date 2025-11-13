@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "start": "webpack serve --env mode=development --env port=4000",
     "build:dev": "webpack --env mode=development",
