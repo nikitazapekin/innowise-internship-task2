@@ -64,9 +64,7 @@
     "redux": "^5.0.1"
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx}": [
-      "eslint --fix",
-      "prettier --write"
-    ]
+    "*": "prettier --write --ignore-unknown",
+    "*.{js,jsx,ts,tsx}": "eslint --fix --no-error-on-unmatched-pattern"
   }
 }
