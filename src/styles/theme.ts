@@ -37,7 +37,7 @@ const theme = createTheme({
 
   spaces: {
     xxs: 5,
-    xs: 19,
+
     sm: 20,
     md: 40,
     lg: 80,
