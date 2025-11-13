@@ -12,8 +12,10 @@
     "lint": "eslint src/ --max-warnings 0 --no-error-on-unmatched-pattern",
     "lint:fix": "eslint . --ext .js,.jsx,.ts,.tsx --fix --no-cache",
     "preview": "webpack serve --env mode=production --env port=4001 --static-directory=build",
-    "vercel-build": "yarn run build:prod",
-    "prepare": "husky"
+   
+    "prepare": "husky",
+ 
+    "vercel-build": "yarn run build:prod"
   },
   "keywords": [],
   "author": "",
@@ -64,7 +66,9 @@
     "redux": "^5.0.1"
   },
   "lint-staged": {
-    "*": "prettier --write --ignore-unknown",
-    "*.{js,jsx,ts,tsx}": "eslint --fix --no-error-on-unmatched-pattern"
+    "*.{js,jsx,ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ]
   }
 }
