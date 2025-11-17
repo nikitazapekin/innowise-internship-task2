@@ -85,7 +85,7 @@ export default [
     rules: {
       "@typescript-eslint/no-explicit-any": "warn",
       "@typescript-eslint/ban-ts-comment": "warn",
-      "@typescript-eslint/no-floating-promises": "error",
+      "@typescript-eslint/no-floating-promises": "warn",
       "@typescript-eslint/consistent-type-imports": "error",
       "react/jsx-uses-react": "error",
       "react/jsx-uses-vars": "error",

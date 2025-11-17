@@ -1,3 +1,13 @@
+export interface Field {
+  id: string | number;
+  label?: string;
+  name?: string;
+  type: string;
+  placeholder: string;
+}
+
 export interface InputProps {
-  field: { id: number; name: string; placeholder: string };
+  field: Field;
+  value?: string;
+  onChange: (value: string) => void;
 }
