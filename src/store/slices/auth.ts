@@ -27,9 +27,6 @@ const authSlice = createSlice({
       const { email, password } = action.payload;
       const user = state.users.find((user) => user.email === email && user.password === password);
 
-      console.log("US", user);
-      console.log("USERS", state.users);
-
       if (user) {
         state.currentUser = user;
         state.isLoggedIn = true;
