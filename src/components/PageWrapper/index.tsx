@@ -1,6 +1,6 @@
- 
 import { Container, useTheme } from "@mui/material";
-import { PageWrapperProps } from "./interfaces";
+
+import type { PageWrapperProps } from "./interfaces";
 
 const PageWrapper = ({ children }: PageWrapperProps) => {
   const theme = useTheme();

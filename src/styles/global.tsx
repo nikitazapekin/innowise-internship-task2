@@ -1,4 +1,5 @@
 import { GlobalStyles } from "@mui/material";
+
 import theme from "./theme";
 
 export const customGlobalStyles = (
