@@ -31,12 +31,14 @@ const SignUp = () => {
     handleSubmit,
     formState: { errors },
     watch,
+    reset,
   } = useForm<FormData>();
 
   useEffect(() => {
     if (isSuccess) {
       showSnackbar("Регистрация успешна! Теперь вы можете войти.", "success");
       dispatch(clearSuccess());
+      reset();
       setTimeout(() => {
         navigate("/sign-in");
       }, 2000);

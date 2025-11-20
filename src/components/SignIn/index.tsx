@@ -30,6 +30,7 @@ const SignIn = () => {
     handleSubmit,
     formState: { errors },
     watch,
+    reset,
   } = useForm<FormData>();
 
   const onSubmit: SubmitHandler<FormData> = (data) => {
@@ -40,6 +41,7 @@ const SignIn = () => {
     if (isSuccess) {
       showSnackbar("Авторизация успешна", "success");
       dispatch(clearSuccess());
+      reset();
       setTimeout(() => {
         navigate("/cards");
       }, 2000);
