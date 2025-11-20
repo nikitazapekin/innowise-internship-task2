@@ -7,7 +7,8 @@ import { validationRules } from "@constants";
 import UserSnackbar from "@hooks/useSnackbar";
 import { Alert, Button, Paper, Snackbar, Stack, Typography, useTheme } from "@mui/material";
 
-import { useAppDispatch } from "@store/redux";
+import { useAppDispatch, useAppSelector } from "@store/redux";
+import { selectIsLoggedIn } from "@store/selectors/auth";
 import { signIn } from "@store/slices/auth";
 
 interface FormData {
@@ -19,7 +20,7 @@ const SignIn = () => {
   const theme = useTheme();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-
+  const isLoggedIn = useAppSelector(selectIsLoggedIn);
   const { snackbar, showSnackbar, closeSnackbar } = UserSnackbar();
 
   const {
@@ -32,10 +33,19 @@ const SignIn = () => {
   const onSubmit: SubmitHandler<FormData> = (data) => {
     try {
       dispatch(signIn({ email: data.email, password: data.password }));
-      navigate("/cards");
     } catch {
       showSnackbar("Ошибка входа", "error");
+
+      return;
     }
+
+    if (isLoggedIn) {
+      navigate("/cards");
+
+      return;
+    }
+
+    showSnackbar("Ошибка входа", "error");
   };
 
   const handleNavigate = () => {
@@ -69,22 +79,32 @@ const SignIn = () => {
               value={emailValue ?? ""}
               onChange={(value) => handleChange("email", value)}
             />
-            {errors.email && (
-              <Typography variant="inherit" component="p" style={{ color: theme.colors.danger }}>
-                {errors.email.message}
-              </Typography>
-            )}
 
             <Input
               field={loginFields[1]}
               value={passwordValue ?? ""}
               onChange={(value) => handleChange("password", value)}
             />
-            {errors.password && (
-              <Typography variant="inherit" component="p" style={{ color: theme.colors.danger }}>
-                {errors.password.message}
-              </Typography>
-            )}
+
+            <Stack
+              style={{ marginTop: 10, height: 30 }}
+              alignItems={"center"}
+              justifyContent={"center"}
+            >
+              {(errors.password || errors.email) && (
+                <Typography
+                  variant="inherit"
+                  component="p"
+                  style={{
+                    color: theme.colors.danger,
+                    textAlign: "center",
+                    fontSize: theme.fontSizes.xxs,
+                  }}
+                >
+                  {errors.password?.message || errors.email?.message}
+                </Typography>
+              )}
+            </Stack>
           </Stack>
           <Button
             type="submit"

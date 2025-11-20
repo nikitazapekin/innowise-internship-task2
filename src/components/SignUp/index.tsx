@@ -79,33 +79,40 @@ const SignUp = () => {
               value={emailValue ?? ""}
               onChange={(value) => handleChange("email", value)}
             />
-            {errors.email && (
-              <Typography variant="inherit" component="p" style={{ color: theme.colors.danger }}>
-                {errors.email.message}
-              </Typography>
-            )}
 
             <Input
               field={registerFields[1]}
               value={passwordValue ?? ""}
               onChange={(value) => handleChange("password", value)}
             />
-            {errors.password && (
-              <Typography variant="inherit" component="p" style={{ color: theme.colors.danger }}>
-                {errors.password.message}
-              </Typography>
-            )}
 
             <Input
               field={registerFields[2]}
               value={confirmPasswordValue ?? ""}
               onChange={(value) => handleChange("confirmPassword", value)}
             />
-            {errors.confirmPassword && (
-              <Typography variant="inherit" component="p" style={{ color: theme.colors.danger }}>
-                {errors.confirmPassword.message}
-              </Typography>
-            )}
+
+            <Stack
+              style={{ marginTop: 10, height: 30 }}
+              alignItems={"center"}
+              justifyContent={"center"}
+            >
+              {(errors.password || errors.email || errors.confirmPassword) && (
+                <Typography
+                  variant="inherit"
+                  component="p"
+                  style={{
+                    color: theme.colors.danger,
+                    textAlign: "center",
+                    fontSize: theme.fontSizes.xxs,
+                  }}
+                >
+                  {errors.password?.message ||
+                    errors.email?.message ||
+                    errors.confirmPassword?.message}
+                </Typography>
+              )}
+            </Stack>
           </Stack>
           <Button
             type="submit"

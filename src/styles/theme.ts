@@ -17,6 +17,7 @@ const theme = createTheme({
   },
 
   fontSizes: {
+    xxs: 14,
     xs: 18,
     sm: 24,
     md: 28,
