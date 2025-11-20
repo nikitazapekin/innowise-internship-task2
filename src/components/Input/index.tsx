@@ -10,7 +10,7 @@ const Input = ({ field, value, onChange }: InputProps) => {
       variant="outlined"
       placeholder={field.placeholder}
       fullWidth
-      value={value || ""}
+      value={value ?? ""}
       onChange={(e) => onChange(e.target.value)}
       required
     />

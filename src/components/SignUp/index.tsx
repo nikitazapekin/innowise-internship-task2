@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Input from "@components/Input";
 import { registerFields } from "@constants";
 import UserSnackbar from "@hooks/useSnackbar";
@@ -7,9 +8,10 @@ import { Alert, Button, Paper, Snackbar, Stack, Typography, useTheme } from "@mu
 import { useAppDispatch } from "@store/redux";
 import { register } from "@store/slices/auth";
 
-const SignUp = ({ onToggleForm }: { onToggleForm: () => void }) => {
+const SignUp = () => {
   const theme = useTheme();
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const { snackbar, showSnackbar, closeSnackbar } = UserSnackbar();
   const [formData, setFormData] = useState({
@@ -46,6 +48,10 @@ const SignUp = ({ onToggleForm }: { onToggleForm: () => void }) => {
     }
   };
 
+  const handleNavigate = () => {
+    navigate("/sign-in");
+  };
+
   return (
     <>
       <Paper elevation={6} sx={{ p: 2, maxWidth: 600, width: "100%", padding: theme.spaces.xxs }}>
@@ -76,7 +82,7 @@ const SignUp = ({ onToggleForm }: { onToggleForm: () => void }) => {
           component="p"
           align="center"
           style={{ marginTop: 10, cursor: "pointer" }}
-          onClick={onToggleForm}
+          onClick={handleNavigate}
         >
           Войти
         </Typography>

@@ -1,8 +1,7 @@
+import { Outlet } from "react-router-dom";
 import { Container, useTheme } from "@mui/material";
 
-import type { PageWrapperProps } from "./interfaces";
-
-const PageWrapper = ({ children }: PageWrapperProps) => {
+const Layout = () => {
   const theme = useTheme();
 
   return (
@@ -21,9 +20,9 @@ const PageWrapper = ({ children }: PageWrapperProps) => {
         backgroundColor: theme.palette.background.default,
       }}
     >
-      {children}
+      <Outlet />
     </Container>
   );
 };
 
-export default PageWrapper;
+export default Layout;

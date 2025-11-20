@@ -1,12 +1,23 @@
-import { CARDS_PAGE, MAIN_PAGE } from "@constants";
+import { CARDS_PAGE, LOGIN_PAGE, MAIN_PAGE, SIGN_UP_PAGE } from "@constants";
 
-import CardsPage from "@pages/CardsPage";
-import MainPage from "@pages/MainPage";
+import CardsPage from "@pages/Cards";
+import SignInPage from "@pages/SignIn";
+import SignUpPage from "@pages/SignUp";
 
 export const routes = [
   {
+    path: LOGIN_PAGE,
+    Component: SignInPage,
+  },
+
+  {
     path: MAIN_PAGE,
-    Component: MainPage,
+    Component: SignInPage,
+  },
+
+  {
+    path: SIGN_UP_PAGE,
+    Component: SignUpPage,
   },
   {
     path: CARDS_PAGE,

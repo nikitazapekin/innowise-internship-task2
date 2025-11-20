@@ -8,7 +8,7 @@ import { Alert, Button, Paper, Snackbar, Stack, Typography, useTheme } from "@mu
 import { useAppDispatch } from "@store/redux";
 import { login } from "@store/slices/auth";
 
-const SignIn = ({ onToggleForm }: { onToggleForm: () => void }) => {
+const SignIn = () => {
   const theme = useTheme();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -42,6 +42,10 @@ const SignIn = ({ onToggleForm }: { onToggleForm: () => void }) => {
     }
   };
 
+  const handleNavigate = () => {
+    navigate("/sign-up");
+  };
+
   return (
     <>
       <Paper elevation={6} sx={{ p: 2, maxWidth: 600, width: "100%", padding: theme.spaces.xxs }}>
@@ -72,7 +76,7 @@ const SignIn = ({ onToggleForm }: { onToggleForm: () => void }) => {
           component="p"
           align="center"
           style={{ marginTop: 10, cursor: "pointer" }}
-          onClick={onToggleForm}
+          onClick={handleNavigate}
         >
           Зарегистрироваться
         </Typography>
