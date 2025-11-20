@@ -1,10 +1,23 @@
+import type { TextFieldProps } from "@mui/material";
 import { TextField } from "@mui/material";
 
-import type { InputProps } from "./interfaces";
+interface Field {
+  id: string | number;
+  label?: string;
+  name?: string;
+  type: string;
+  placeholder: string;
+}
 
-const Input = ({ field, value, onChange }: InputProps) => {
+interface InputProps extends Omit<TextFieldProps, "onChange"> {
+  field: Field;
+  onChange: (value: string) => void;
+}
+
+const Input = ({ field, value, onChange, ...textFieldProps }: InputProps) => {
   return (
     <TextField
+      {...textFieldProps}
       label={field.label}
       type={field.type}
       variant="outlined"

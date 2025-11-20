@@ -3,9 +3,17 @@ export interface UserCredentials {
   password: string;
 }
 
+export interface User {
+  email: string;
+  password: string;
+}
+
 export interface AuthState {
-  users: UserCredentials[];
-  currentUser: UserCredentials | null;
+  users: User[];
+  currentUser: User | null;
   isLoggedIn: boolean;
   token: string | null;
+  isLoading: boolean;
+  error: string | null;
+  isSuccess: boolean;
 }

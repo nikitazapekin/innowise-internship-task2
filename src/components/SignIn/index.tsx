@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import type { SubmitHandler } from "react-hook-form";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
@@ -8,8 +9,8 @@ import UserSnackbar from "@hooks/useSnackbar";
 import { Alert, Button, Paper, Snackbar, Stack, Typography, useTheme } from "@mui/material";
 
 import { useAppDispatch, useAppSelector } from "@store/redux";
-import { selectIsLoggedIn } from "@store/selectors/auth";
-import { signIn } from "@store/slices/auth";
+import { selectIsError, selectIsLoggedIn } from "@store/selectors/auth";
+import { clearSuccess, signIn } from "@store/slices/auth";
 
 interface FormData {
   email: string;
@@ -20,9 +21,10 @@ const SignIn = () => {
   const theme = useTheme();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const isLoggedIn = useAppSelector(selectIsLoggedIn);
-  const { snackbar, showSnackbar, closeSnackbar } = UserSnackbar();
 
+  const { snackbar, showSnackbar, closeSnackbar } = UserSnackbar();
+  const error = useAppSelector(selectIsError);
+  const isSuccess = useAppSelector(selectIsLoggedIn);
   const {
     register,
     handleSubmit,
@@ -31,22 +33,20 @@ const SignIn = () => {
   } = useForm<FormData>();
 
   const onSubmit: SubmitHandler<FormData> = (data) => {
-    try {
-      dispatch(signIn({ email: data.email, password: data.password }));
-    } catch {
-      showSnackbar("Ошибка входа", "error");
-
-      return;
-    }
-
-    if (isLoggedIn) {
-      navigate("/cards");
-
-      return;
-    }
-
-    showSnackbar("Ошибка входа", "error");
+    dispatch(signIn({ email: data.email, password: data.password }));
   };
+
+  useEffect(() => {
+    if (isSuccess) {
+      showSnackbar("Авторизация успешна", "success");
+      dispatch(clearSuccess());
+      setTimeout(() => {
+        navigate("/cards");
+      }, 2000);
+    } else if (error) {
+      showSnackbar(error, "error");
+    }
+  }, [isSuccess, error, navigate, dispatch]);
 
   const handleNavigate = () => {
     navigate("/sign-up");
@@ -68,12 +68,20 @@ const SignIn = () => {
 
   return (
     <>
-      <Paper elevation={6} sx={{ p: 2, maxWidth: 600, width: "100%", padding: theme.spaces.xxs }}>
+      <Paper
+        elevation={6}
+        sx={{
+          p: 2,
+          maxWidth: 600,
+          width: "100%",
+          px: theme.spaces.xxs,
+        }}
+      >
         <Typography variant="h2" component="h2" align="center">
           Вход
         </Typography>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <Stack direction="column" spacing={2} style={{ marginTop: 10 }}>
+          <Stack direction="column" spacing={2} mt={1}>
             <Input
               field={loginFields[0]}
               value={emailValue ?? ""}
@@ -86,16 +94,12 @@ const SignIn = () => {
               onChange={(value) => handleChange("password", value)}
             />
 
-            <Stack
-              style={{ marginTop: 10, height: 30 }}
-              alignItems={"center"}
-              justifyContent={"center"}
-            >
+            <Stack height={30} alignItems="center" justifyContent="center">
               {(errors.password || errors.email) && (
                 <Typography
                   variant="inherit"
                   component="p"
-                  style={{
+                  sx={{
                     color: theme.colors.danger,
                     textAlign: "center",
                     fontSize: theme.fontSizes.xxs,
@@ -111,7 +115,11 @@ const SignIn = () => {
             size="large"
             color="info"
             variant="contained"
-            style={{ width: "100%", cursor: "pointer", marginTop: 10 }}
+            sx={{
+              width: "100%",
+              cursor: "pointer",
+              mt: 1,
+            }}
           >
             Войти
           </Button>
@@ -120,7 +128,10 @@ const SignIn = () => {
           variant="inherit"
           component="p"
           align="center"
-          style={{ marginTop: 10, cursor: "pointer" }}
+          sx={{
+            mt: 1,
+            cursor: "pointer",
+          }}
           onClick={handleNavigate}
         >
           Зарегистрироваться
