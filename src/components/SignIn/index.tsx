@@ -2,11 +2,13 @@ import type { SubmitHandler } from "react-hook-form";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import Input from "@components/Input";
+import { loginFields } from "@constants";
+import { validationRules } from "@constants";
 import UserSnackbar from "@hooks/useSnackbar";
 import { Alert, Button, Paper, Snackbar, Stack, Typography, useTheme } from "@mui/material";
 
 import { useAppDispatch } from "@store/redux";
-import { login } from "@store/slices/auth";
+import { signIn } from "@store/slices/auth";
 
 type FormData = {
   email: string;
@@ -29,7 +31,7 @@ const SignIn = () => {
 
   const onSubmit: SubmitHandler<FormData> = (data) => {
     try {
-      dispatch(login({ email: data.email, password: data.password }));
+      dispatch(signIn({ email: data.email, password: data.password }));
       navigate("/cards");
     } catch {
       showSnackbar("Ошибка входа", "error");
@@ -38,6 +40,17 @@ const SignIn = () => {
 
   const handleNavigate = () => {
     navigate("/sign-up");
+  };
+
+  const handleChange = (fieldName: keyof FormData, value: string) => {
+    const event = {
+      target: {
+        value: value,
+        name: fieldName,
+      },
+    };
+
+    register(fieldName, validationRules[fieldName]).onChange(event);
   };
 
   const emailValue = watch("email");
@@ -52,65 +65,23 @@ const SignIn = () => {
         <form onSubmit={handleSubmit(onSubmit)}>
           <Stack direction="column" spacing={2} style={{ marginTop: 10 }}>
             <Input
-              field={{
-                id: 1,
-                name: "email",
-                placeholder: "Enter email",
-                label: "email",
-                type: "email",
-              }}
+              field={loginFields[0]}
               value={emailValue ?? ""}
-              onChange={(value) => {
-                const event = {
-                  target: {
-                    value: value,
-                    name: "email",
-                  },
-                };
-
-                register("email").onChange(event);
-              }}
+              onChange={(value) => handleChange("email", value)}
             />
             {errors.email && (
-              <Typography
-                variant="inherit"
-                component="p"
-                align="center"
-                style={{ marginTop: 10, color: theme.colors.danger }}
-                onClick={handleNavigate}
-              >
+              <Typography variant="inherit" component="p" style={{ color: theme.colors.danger }}>
                 {errors.email.message}
               </Typography>
             )}
 
             <Input
-              field={{
-                id: 2,
-                name: "password",
-                placeholder: "Enter password",
-                label: "password",
-                type: "password",
-              }}
+              field={loginFields[1]}
               value={passwordValue ?? ""}
-              onChange={(value) => {
-                const event = {
-                  target: {
-                    value: value,
-                    name: "password",
-                  },
-                };
-
-                register("password").onChange(event);
-              }}
+              onChange={(value) => handleChange("password", value)}
             />
             {errors.password && (
-              <Typography
-                variant="inherit"
-                component="p"
-                align="center"
-                style={{ marginTop: 10, color: theme.colors.danger }}
-                onClick={handleNavigate}
-              >
+              <Typography variant="inherit" component="p" style={{ color: theme.colors.danger }}>
                 {errors.password.message}
               </Typography>
             )}

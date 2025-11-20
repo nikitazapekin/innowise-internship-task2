@@ -3,11 +3,12 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import Input from "@components/Input";
 import { registerFields } from "@constants";
+import { validationRules } from "@constants";
 import UserSnackbar from "@hooks/useSnackbar";
 import { Alert, Button, Paper, Snackbar, Stack, Typography, useTheme } from "@mui/material";
 
 import { useAppDispatch } from "@store/redux";
-import { register as registerAction } from "@store/slices/auth";
+import { signUp } from "@store/slices/auth";
 
 type FormData = {
   email: string;
@@ -31,7 +32,7 @@ const SignUp = () => {
 
   const onSubmit: SubmitHandler<FormData> = (data) => {
     try {
-      dispatch(registerAction({ email: data.email, password: data.password }));
+      dispatch(signUp({ email: data.email, password: data.password }));
       showSnackbar("Регистрация успешна! Теперь вы можете войти.", "success");
     } catch {
       showSnackbar("Ошибка регистрации", "error");
@@ -40,6 +41,25 @@ const SignUp = () => {
 
   const handleNavigate = () => {
     navigate("/sign-in");
+  };
+
+  const handleChange = (fieldName: keyof FormData, value: string) => {
+    const event = {
+      target: {
+        value: value,
+        name: fieldName,
+      },
+    };
+
+    const getPasswordValue = () => watch("password");
+
+    const rules = {
+      email: validationRules.email,
+      password: validationRules.password,
+      confirmPassword: validationRules.confirmPassword(getPasswordValue),
+    };
+
+    register(fieldName, rules[fieldName]).onChange(event);
   };
 
   const emailValue = watch("email");
@@ -57,22 +77,7 @@ const SignUp = () => {
             <Input
               field={registerFields[0]}
               value={emailValue ?? ""}
-              onChange={(value) => {
-                const event = {
-                  target: {
-                    value: value,
-                    name: "email",
-                  },
-                };
-
-                register("email", {
-                  required: "Email обязателен для заполнения",
-                  pattern: {
-                    value: /^\S+@\S+$/i,
-                    message: "Введите корректный email",
-                  },
-                }).onChange(event);
-              }}
+              onChange={(value) => handleChange("email", value)}
             />
             {errors.email && (
               <Typography variant="inherit" component="p" style={{ color: theme.colors.danger }}>
@@ -83,22 +88,7 @@ const SignUp = () => {
             <Input
               field={registerFields[1]}
               value={passwordValue ?? ""}
-              onChange={(value) => {
-                const event = {
-                  target: {
-                    value: value,
-                    name: "password",
-                  },
-                };
-
-                register("password", {
-                  required: "Пароль обязателен для заполнения",
-                  minLength: {
-                    value: 6,
-                    message: "Пароль должен содержать минимум 6 символов",
-                  },
-                }).onChange(event);
-              }}
+              onChange={(value) => handleChange("password", value)}
             />
             {errors.password && (
               <Typography variant="inherit" component="p" style={{ color: theme.colors.danger }}>
@@ -109,19 +99,7 @@ const SignUp = () => {
             <Input
               field={registerFields[2]}
               value={confirmPasswordValue ?? ""}
-              onChange={(value) => {
-                const event = {
-                  target: {
-                    value: value,
-                    name: "confirmPassword",
-                  },
-                };
-
-                register("confirmPassword", {
-                  required: "Подтверждение пароля обязательно",
-                  validate: (value) => value === watch("password") || "Пароли не совпадают",
-                }).onChange(event);
-              }}
+              onChange={(value) => handleChange("confirmPassword", value)}
             />
             {errors.confirmPassword && (
               <Typography variant="inherit" component="p" style={{ color: theme.colors.danger }}>

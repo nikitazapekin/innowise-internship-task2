@@ -14,7 +14,7 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    register: (state, action: PayloadAction<UserCredentials>) => {
+    signUp: (state, action: PayloadAction<UserCredentials>) => {
       const { email, password } = action.payload;
 
       const existingUser = state.users.find((user) => user.email === email);
@@ -23,7 +23,7 @@ const authSlice = createSlice({
         state.users.push({ email, password });
       }
     },
-    login: (state, action: PayloadAction<UserCredentials>) => {
+    signIn: (state, action: PayloadAction<UserCredentials>) => {
       const { email, password } = action.payload;
       const user = state.users.find((user) => user.email === email && user.password === password);
 
@@ -45,5 +45,5 @@ const authSlice = createSlice({
   },
 });
 
-export const { register, login, logout, setToken } = authSlice.actions;
+export const { signUp, signIn, logout, setToken } = authSlice.actions;
 export default authSlice.reducer;
