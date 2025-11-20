@@ -10,11 +10,11 @@ import { Alert, Button, Paper, Snackbar, Stack, Typography, useTheme } from "@mu
 import { useAppDispatch } from "@store/redux";
 import { signUp } from "@store/slices/auth";
 
-type FormData = {
+interface FormData {
   email: string;
   password: string;
   confirmPassword: string;
-};
+}
 
 const SignUp = () => {
   const theme = useTheme();
