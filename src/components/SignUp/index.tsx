@@ -1,4 +1,5 @@
-import { useState } from "react";
+import type { SubmitHandler } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import Input from "@components/Input";
 import { registerFields } from "@constants";
@@ -6,7 +7,13 @@ import UserSnackbar from "@hooks/useSnackbar";
 import { Alert, Button, Paper, Snackbar, Stack, Typography, useTheme } from "@mui/material";
 
 import { useAppDispatch } from "@store/redux";
-import { register } from "@store/slices/auth";
+import { register as registerAction } from "@store/slices/auth";
+
+type FormData = {
+  email: string;
+  password: string;
+  confirmPassword: string;
+};
 
 const SignUp = () => {
   const theme = useTheme();
@@ -14,34 +21,17 @@ const SignUp = () => {
   const navigate = useNavigate();
 
   const { snackbar, showSnackbar, closeSnackbar } = UserSnackbar();
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-    confirmPassword: "",
-  });
 
-  const handleInputChange = (fieldName: string, value: string) => {
-    setFormData((prev) => ({
-      ...prev,
-      [fieldName]: value,
-    }));
-  };
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    watch,
+  } = useForm<FormData>();
 
-  const handleSubmit = () => {
-    if (!formData.email || !formData.password || !formData.confirmPassword) {
-      showSnackbar("Заполните все поля", "error");
-
-      return;
-    }
-
-    if (formData.password !== formData.confirmPassword) {
-      showSnackbar("Пароли не совпадают", "error");
-
-      return;
-    }
-
+  const onSubmit: SubmitHandler<FormData> = (data) => {
     try {
-      dispatch(register({ email: formData.email, password: formData.password }));
+      dispatch(registerAction({ email: data.email, password: data.password }));
       showSnackbar("Регистрация успешна! Теперь вы можете войти.", "success");
     } catch {
       showSnackbar("Ошибка регистрации", "error");
@@ -52,31 +42,103 @@ const SignUp = () => {
     navigate("/sign-in");
   };
 
+  const emailValue = watch("email");
+  const passwordValue = watch("password");
+  const confirmPasswordValue = watch("confirmPassword");
+
   return (
     <>
       <Paper elevation={6} sx={{ p: 2, maxWidth: 600, width: "100%", padding: theme.spaces.xxs }}>
         <Typography variant="h2" component="h2" align="center">
           Регистрация
         </Typography>
-        <Stack direction="column" spacing={2} style={{ marginTop: 10 }}>
-          {registerFields.map((field) => (
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <Stack direction="column" spacing={2} style={{ marginTop: 10 }}>
             <Input
-              key={field.id}
-              field={field}
-              value={formData[field.name as keyof typeof formData] || ""}
-              onChange={(value) => handleInputChange(field.name, value)}
+              field={registerFields[0]}
+              value={emailValue ?? ""}
+              onChange={(value) => {
+                const event = {
+                  target: {
+                    value: value,
+                    name: "email",
+                  },
+                };
+
+                register("email", {
+                  required: "Email обязателен для заполнения",
+                  pattern: {
+                    value: /^\S+@\S+$/i,
+                    message: "Введите корректный email",
+                  },
+                }).onChange(event);
+              }}
             />
-          ))}
-        </Stack>
-        <Button
-          size="large"
-          color="info"
-          variant="contained"
-          style={{ width: "100%", cursor: "pointer", marginTop: 10 }}
-          onClick={handleSubmit}
-        >
-          Зарегистрироваться
-        </Button>
+            {errors.email && (
+              <Typography variant="inherit" component="p" style={{ color: theme.colors.danger }}>
+                {errors.email.message}
+              </Typography>
+            )}
+
+            <Input
+              field={registerFields[1]}
+              value={passwordValue ?? ""}
+              onChange={(value) => {
+                const event = {
+                  target: {
+                    value: value,
+                    name: "password",
+                  },
+                };
+
+                register("password", {
+                  required: "Пароль обязателен для заполнения",
+                  minLength: {
+                    value: 6,
+                    message: "Пароль должен содержать минимум 6 символов",
+                  },
+                }).onChange(event);
+              }}
+            />
+            {errors.password && (
+              <Typography variant="inherit" component="p" style={{ color: theme.colors.danger }}>
+                {errors.password.message}
+              </Typography>
+            )}
+
+            <Input
+              field={registerFields[2]}
+              value={confirmPasswordValue ?? ""}
+              onChange={(value) => {
+                const event = {
+                  target: {
+                    value: value,
+                    name: "confirmPassword",
+                  },
+                };
+
+                register("confirmPassword", {
+                  required: "Подтверждение пароля обязательно",
+                  validate: (value) => value === watch("password") || "Пароли не совпадают",
+                }).onChange(event);
+              }}
+            />
+            {errors.confirmPassword && (
+              <Typography variant="inherit" component="p" style={{ color: theme.colors.danger }}>
+                {errors.confirmPassword.message}
+              </Typography>
+            )}
+          </Stack>
+          <Button
+            type="submit"
+            size="large"
+            color="info"
+            variant="contained"
+            style={{ width: "100%", cursor: "pointer", marginTop: 10 }}
+          >
+            Зарегистрироваться
+          </Button>
+        </form>
         <Typography
           variant="inherit"
           component="p"

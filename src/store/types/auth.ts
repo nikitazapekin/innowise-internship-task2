@@ -1,11 +1,11 @@
-export interface User {
+export interface UserCredentials {
   email: string;
   password: string;
 }
 
 export interface AuthState {
-  users: User[];
-  currentUser: User | null;
+  users: UserCredentials[];
+  currentUser: UserCredentials | null;
   isLoggedIn: boolean;
   token: string | null;
 }

@@ -1,7 +1,7 @@
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { createSlice } from "@reduxjs/toolkit";
 
-import type { AuthState } from "@store/types/auth";
+import type { AuthState, UserCredentials } from "@store/types/auth";
 
 const initialState: AuthState = {
   users: [],
@@ -14,7 +14,7 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    register: (state, action: PayloadAction<{ email: string; password: string }>) => {
+    register: (state, action: PayloadAction<UserCredentials>) => {
       const { email, password } = action.payload;
 
       const existingUser = state.users.find((user) => user.email === email);
@@ -23,7 +23,7 @@ const authSlice = createSlice({
         state.users.push({ email, password });
       }
     },
-    login: (state, action: PayloadAction<{ email: string; password: string }>) => {
+    login: (state, action: PayloadAction<UserCredentials>) => {
       const { email, password } = action.payload;
       const user = state.users.find((user) => user.email === email && user.password === password);
 
