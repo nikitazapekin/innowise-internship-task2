@@ -48,7 +48,7 @@ const SignIn = () => {
     } else if (error) {
       showSnackbar(error, "error");
     }
-  }, [isSuccess, error, navigate, reset, dispatch]);
+  }, [isSuccess, error, navigate, reset, showSnackbar, dispatch]);
 
   const handleNavigate = () => {
     navigate("/sign-up");

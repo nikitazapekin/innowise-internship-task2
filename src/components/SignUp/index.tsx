@@ -45,7 +45,7 @@ const SignUp = () => {
     } else if (error) {
       showSnackbar(error, "error");
     }
-  }, [isSuccess, error, navigate, reset, dispatch]);
+  }, [isSuccess, error, navigate, reset, showSnackbar, dispatch]);
 
   const onSubmit: SubmitHandler<FormData> = (data) => {
     dispatch(signUp({ email: data.email, password: data.password }));
