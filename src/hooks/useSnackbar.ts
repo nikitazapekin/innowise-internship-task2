@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 
 const UserSnackbar = () => {
   const [snackbar, setSnackbar] = useState<{
@@ -11,17 +11,17 @@ const UserSnackbar = () => {
     severity: "success",
   });
 
-  const showSnackbar = (message: string, severity: "success" | "error") => {
+  const showSnackbar = useCallback((message: string, severity: "success" | "error") => {
     setSnackbar({
       open: true,
       message,
       severity,
     });
-  };
+  }, []);
 
-  const closeSnackbar = () => {
+  const closeSnackbar = useCallback(() => {
     setSnackbar((prev) => ({ ...prev, open: false }));
-  };
+  }, []);
 
   return { snackbar, showSnackbar, closeSnackbar };
 };
