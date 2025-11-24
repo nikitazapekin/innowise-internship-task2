@@ -2,11 +2,18 @@ import { useEffect } from "react";
 import type { SubmitHandler } from "react-hook-form";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import Input from "@components/Input";
-import { loginFields } from "@constants";
 import { validationRules } from "@constants";
 import UserSnackbar from "@hooks/useSnackbar";
-import { Alert, Button, Paper, Snackbar, Stack, Typography, useTheme } from "@mui/material";
+import {
+  Alert,
+  Button,
+  Paper,
+  Snackbar,
+  Stack,
+  TextField,
+  Typography,
+  useTheme,
+} from "@mui/material";
 
 import { useAppDispatch, useAppSelector } from "@store/redux";
 import { selectIsError, selectIsLoggedIn } from "@store/selectors/auth";
@@ -25,12 +32,11 @@ const SignIn = () => {
   const { snackbar, showSnackbar, closeSnackbar } = UserSnackbar();
   const error = useAppSelector(selectIsError);
   const isSuccess = useAppSelector(selectIsLoggedIn);
+
   const {
     register,
     handleSubmit,
     formState: { errors },
-    watch,
-    reset,
   } = useForm<FormData>();
 
   const onSubmit: SubmitHandler<FormData> = (data) => {
@@ -41,32 +47,17 @@ const SignIn = () => {
     if (isSuccess) {
       showSnackbar("Авторизация успешна", "success");
       dispatch(clearSuccess());
-      reset();
       setTimeout(() => {
         navigate("/cards");
       }, 2000);
     } else if (error) {
       showSnackbar(error, "error");
     }
-  }, [isSuccess, error, navigate, reset, showSnackbar, dispatch]);
+  }, [isSuccess, error, navigate, showSnackbar, dispatch]);
 
   const handleNavigate = () => {
     navigate("/sign-up");
   };
-
-  const handleChange = (fieldName: keyof FormData, value: string) => {
-    const event = {
-      target: {
-        value: value,
-        name: fieldName,
-      },
-    };
-
-    register(fieldName, validationRules[fieldName]).onChange(event);
-  };
-
-  const emailValue = watch("email");
-  const passwordValue = watch("password");
 
   return (
     <>
@@ -84,16 +75,24 @@ const SignIn = () => {
         </Typography>
         <form onSubmit={handleSubmit(onSubmit)}>
           <Stack direction="column" spacing={2} mt={1}>
-            <Input
-              field={loginFields[0]}
-              value={emailValue ?? ""}
-              onChange={(value) => handleChange("email", value)}
+            <TextField
+              label="Email"
+              type="email"
+              variant="outlined"
+              placeholder="Введите ваш email"
+              fullWidth
+              required
+              {...register("email", validationRules.email)}
             />
 
-            <Input
-              field={loginFields[1]}
-              value={passwordValue ?? ""}
-              onChange={(value) => handleChange("password", value)}
+            <TextField
+              label="Пароль"
+              type="password"
+              variant="outlined"
+              placeholder="Введите ваш пароль"
+              fullWidth
+              required
+              {...register("password", validationRules.password)}
             />
 
             <Stack height={30} alignItems="center" justifyContent="center">

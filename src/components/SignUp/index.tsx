@@ -1,12 +1,19 @@
-import { useCallback, useEffect } from "react";
+import { useEffect } from "react";
 import type { SubmitHandler } from "react-hook-form";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import Input from "@components/Input";
-import { registerFields } from "@constants";
 import { validationRules } from "@constants";
 import UserSnackbar from "@hooks/useSnackbar";
-import { Alert, Button, Paper, Snackbar, Stack, Typography, useTheme } from "@mui/material";
+import {
+  Alert,
+  Button,
+  Paper,
+  Snackbar,
+  Stack,
+  TextField,
+  Typography,
+  useTheme,
+} from "@mui/material";
 
 import { useAppDispatch, useAppSelector } from "@store/redux";
 import { selectIsError, selectIsSuccess } from "@store/selectors/auth";
@@ -31,21 +38,21 @@ const SignUp = () => {
     handleSubmit,
     formState: { errors },
     watch,
-    reset,
   } = useForm<FormData>();
+
+  const password = watch("password");
 
   useEffect(() => {
     if (isSuccess) {
       showSnackbar("Регистрация успешна! Теперь вы можете войти.", "success");
       dispatch(clearSuccess());
-      reset();
       setTimeout(() => {
         navigate("/sign-in");
       }, 2000);
     } else if (error) {
       showSnackbar(error, "error");
     }
-  }, [isSuccess, error, navigate, reset, showSnackbar, dispatch]);
+  }, [isSuccess, error, navigate, showSnackbar, dispatch]);
 
   const onSubmit: SubmitHandler<FormData> = (data) => {
     dispatch(signUp({ email: data.email, password: data.password }));
@@ -54,31 +61,6 @@ const SignUp = () => {
   const handleNavigate = () => {
     navigate("/sign-in");
   };
-  const handleChange = useCallback(
-    (fieldName: keyof FormData, value: string) => {
-      const getPasswordValue = () => watch("password");
-
-      const rules = {
-        email: validationRules.email,
-        password: validationRules.password,
-        confirmPassword: validationRules.confirmPassword(getPasswordValue),
-      };
-
-      const { onChange } = register(fieldName, rules[fieldName]);
-
-      onChange({
-        target: {
-          name: fieldName,
-          value: value,
-        },
-      });
-    },
-    [register, watch]
-  );
-
-  const emailValue = watch("email");
-  const passwordValue = watch("password");
-  const confirmPasswordValue = watch("confirmPassword");
 
   return (
     <>
@@ -96,22 +78,37 @@ const SignUp = () => {
         </Typography>
         <form onSubmit={handleSubmit(onSubmit)}>
           <Stack direction="column" spacing={2} mt={1}>
-            <Input
-              field={registerFields[0]}
-              value={emailValue ?? ""}
-              onChange={(value) => handleChange("email", value)}
+            <TextField
+              label="Email"
+              type="email"
+              variant="outlined"
+              placeholder="Введите ваш email"
+              fullWidth
+              required
+              {...register("email", validationRules.email)}
             />
 
-            <Input
-              field={registerFields[1]}
-              value={passwordValue ?? ""}
-              onChange={(value) => handleChange("password", value)}
+            <TextField
+              label="Пароль"
+              type="password"
+              variant="outlined"
+              placeholder="Введите ваш пароль"
+              fullWidth
+              required
+              {...register("password", validationRules.password)}
             />
 
-            <Input
-              field={registerFields[2]}
-              value={confirmPasswordValue ?? ""}
-              onChange={(value) => handleChange("confirmPassword", value)}
+            <TextField
+              label="Подтвердите пароль"
+              type="password"
+              variant="outlined"
+              placeholder="Повторите ваш пароль"
+              fullWidth
+              required
+              {...register("confirmPassword", {
+                required: "Подтверждение пароля обязательно",
+                validate: (value) => value === password || "Пароли не совпадают",
+              })}
             />
 
             <Stack height={30} alignItems="center" justifyContent="center">
