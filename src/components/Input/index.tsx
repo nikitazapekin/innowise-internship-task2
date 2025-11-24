@@ -1,21 +1,23 @@
+import { forwardRef } from "react";
+import type { UseFormRegisterReturn } from "react-hook-form";
 import type { TextFieldProps } from "@mui/material";
 import { TextField } from "@mui/material";
 
 interface InputProps extends Omit<TextFieldProps, "onChange"> {
-  onChange: (value: string) => void;
+  register?: UseFormRegisterReturn;
 }
 
-const Input = ({ value, onChange, ...textFieldProps }: InputProps) => {
+const Input = forwardRef<HTMLInputElement, InputProps>(({ register, ...textFieldProps }, ref) => {
   return (
     <TextField
+      {...register}
       {...textFieldProps}
+      inputRef={ref}
       variant="outlined"
       fullWidth
-      value={value ?? ""}
-      onChange={(e) => onChange(e.target.value)}
       required
     />
   );
-};
+});
 
 export default Input;

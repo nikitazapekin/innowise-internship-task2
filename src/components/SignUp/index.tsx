@@ -2,18 +2,10 @@ import { useEffect } from "react";
 import type { SubmitHandler } from "react-hook-form";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import Input from "@components/Input";
 import { validationRules } from "@constants";
 import UserSnackbar from "@hooks/useSnackbar";
-import {
-  Alert,
-  Button,
-  Paper,
-  Snackbar,
-  Stack,
-  TextField,
-  Typography,
-  useTheme,
-} from "@mui/material";
+import { Alert, Button, Paper, Snackbar, Stack, Typography, useTheme } from "@mui/material";
 
 import { useAppDispatch, useAppSelector } from "@store/redux";
 import { selectIsError, selectIsSuccess } from "@store/selectors/auth";
@@ -78,33 +70,24 @@ const SignUp = () => {
         </Typography>
         <form onSubmit={handleSubmit(onSubmit)}>
           <Stack direction="column" spacing={2} mt={1}>
-            <TextField
+            <Input
               label="Email"
               type="email"
-              variant="outlined"
               placeholder="Введите ваш email"
-              fullWidth
-              required
               {...register("email", validationRules.email)}
             />
 
-            <TextField
+            <Input
               label="Пароль"
               type="password"
-              variant="outlined"
               placeholder="Введите ваш пароль"
-              fullWidth
-              required
               {...register("password", validationRules.password)}
             />
 
-            <TextField
+            <Input
               label="Подтвердите пароль"
               type="password"
-              variant="outlined"
               placeholder="Повторите ваш пароль"
-              fullWidth
-              required
               {...register("confirmPassword", {
                 required: "Подтверждение пароля обязательно",
                 validate: (value) => value === password || "Пароли не совпадают",
