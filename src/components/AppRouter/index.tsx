@@ -1,11 +1,14 @@
 import type { ComponentType, ReactNode } from "react";
 import { Navigate, Outlet, Route, Routes } from "react-router-dom";
 import Layout from "@components/Layout";
+import { CARD_PAGE, CARDS_PAGE, LOGIN_PAGE, MAIN_PAGE, SIGN_UP_PAGE } from "@constants/routes";
 
+import CardPage from "@pages/Card";
+import CardsPage from "@pages/Cards";
+import SignInPage from "@pages/SignIn";
+import SignUpPage from "@pages/SignUp";
 import { useAppSelector } from "@store/redux";
 import { selectIsLoggedIn } from "@store/selectors/auth";
-
-import { routes } from "./routesConfig";
 
 export interface AuthUser {
   id: string;
@@ -47,22 +50,17 @@ const AppRoutes = () => {
     <Routes>
       <Route element={<Layout />}>
         <Route element={<ProtectedRoute isAllowed={!isLoggedIn} redirectPath="/cards" />}>
-          {routes
-            .filter((route) => route.isPrivate === false)
-            .map(({ path, Component }) => (
-              <Route key={path} path={path} element={<Component />} />
-            ))}
+          <Route path={LOGIN_PAGE} element={<SignInPage />} />
+          <Route path={SIGN_UP_PAGE} element={<SignUpPage />} />
+          <Route path={MAIN_PAGE} element={<SignInPage />} />
         </Route>
 
         <Route element={<ProtectedRoute isAllowed={isLoggedIn} redirectPath="/sign-in" />}>
-          {routes
-            .filter((route) => route.isPrivate === true)
-            .map(({ path, Component }) => (
-              <Route key={path} path={path} element={<Component />} />
-            ))}
+          <Route path={CARDS_PAGE} element={<CardsPage />} />
+          <Route path={CARD_PAGE} element={<CardPage />} />
         </Route>
 
-        <Route path="/" element={<Navigate to={isLoggedIn ? "/cards" : "/sign-in"} replace />} />
+        <Route path="/" element={<Navigate to={isLoggedIn ? CARDS_PAGE : LOGIN_PAGE} replace />} />
 
         <Route path="*" element={<div>404 - Page Not Found</div>} />
       </Route>
