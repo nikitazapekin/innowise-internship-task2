@@ -64,17 +64,36 @@ export const productsApi = createApi({
     baseUrl: API_BASE_URL,
   }),
 
+  tagTypes: ["Product", "ProductsList"],
+  keepUnusedDataFor: 60,
+  refetchOnMountOrArgChange: 30,
+
   endpoints: (builder) => ({
     getProducts: builder.query<ProductsResponse, void>({
       query: () => "/products",
+
+      keepUnusedDataFor: 120,
+      providesTags: ["ProductsList"],
     }),
     getProductById: builder.query<Product, number>({
       query: (id) => `/products/${id}`,
+      providesTags: (result, error, id) => (result ? [{ type: "Product", id }] : ["Product"]),
     }),
     searchProducts: builder.query<ProductsResponse, string>({
       query: (searchTerm) => `/products/search?q=${searchTerm}`,
+      keepUnusedDataFor: 30,
+      providesTags: ["ProductsList"],
+    }),
+
+    updateProduct: builder.mutation<Product, { id: number; updates: Partial<Product> }>({
+      query: ({ id, updates }) => ({
+        url: `/products/${id}`,
+        method: "PUT",
+        body: updates,
+      }),
+
+      invalidatesTags: (result, error, { id }) => [{ type: "Product", id }, "ProductsList"],
     }),
   }),
 });
-
 export const { useGetProductsQuery, useGetProductByIdQuery, useSearchProductsQuery } = productsApi;
