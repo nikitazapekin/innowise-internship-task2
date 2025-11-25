@@ -84,16 +84,6 @@ export const productsApi = createApi({
       keepUnusedDataFor: 30,
       providesTags: ["ProductsList"],
     }),
-
-    updateProduct: builder.mutation<Product, { id: number; updates: Partial<Product> }>({
-      query: ({ id, updates }) => ({
-        url: `/products/${id}`,
-        method: "PUT",
-        body: updates,
-      }),
-
-      invalidatesTags: (result, error, { id }) => [{ type: "Product", id }, "ProductsList"],
-    }),
   }),
 });
 export const { useGetProductsQuery, useGetProductByIdQuery, useSearchProductsQuery } = productsApi;
