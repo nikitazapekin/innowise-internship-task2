@@ -104,8 +104,7 @@ const CardDetails = () => {
             gutterBottom
             sx={{
               fontFamily: theme.fontFamilies.primary,
-              fontSize: { xs: theme.fontSizes.md, md: theme.fontSizes.lg },
-              fontWeight: "bold",
+              fontSize: theme.fontSizes.md,
             }}
           >
             {product.title}
@@ -113,22 +112,29 @@ const CardDetails = () => {
 
           <Box display="flex" alignItems="center" mb={2}>
             <Rating value={product.rating} readOnly precision={0.1} />
-            <Typography variant="body1" sx={{ ml: 1 }}>
+            <Typography variant="body1" fontSize={theme.fontSizes.sm} sx={{ ml: 1 }}>
               {product.rating}
             </Typography>
           </Box>
 
           <Box display="flex" alignItems="center" gap={2} mb={3}>
-            <Typography variant="h4" color="primary">
+            <Typography variant="h4" fontSize={theme.fontSizes.sm} color="primary">
               ${product.price}
             </Typography>
           </Box>
 
-          <Typography variant="body1">{product.description}</Typography>
+          <Typography variant="body1" fontSize={theme.fontSizes.sm}>
+            {product.description}
+          </Typography>
 
           <Paper elevation={2} sx={{ p: 3, mb: 3 }}>
-            <Typography variant="h6">Основные характеристики</Typography>
-            <Box sx={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 2 }}>
+            <Typography variant="h6" fontSize={theme.fontSizes.xs}>
+              Основные характеристики
+            </Typography>
+            <Box
+              sx={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 2 }}
+              fontSize={theme.fontSizes.xxs}
+            >
               <Box>
                 <Typography color={theme.colors.black}>Бренд:</Typography>
                 <Typography variant="body1">{product.brand}</Typography>
@@ -161,10 +167,13 @@ const CardDetails = () => {
           </Paper>
 
           <Paper elevation={2} sx={{ p: 3, mb: 3 }}>
-            <Typography variant="h6" gutterBottom sx={{ fontWeight: "bold" }}>
+            <Typography variant="h6" fontSize={theme.fontSizes.xs}>
               Габариты
             </Typography>
-            <Box sx={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 2 }}>
+            <Box
+              sx={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 2 }}
+              fontSize={theme.fontSizes.xxs}
+            >
               <Box>
                 <Typography variant="body2" color={theme.colors.black}>
                   Ширина:
@@ -187,8 +196,10 @@ const CardDetails = () => {
           </Paper>
 
           <Box mb={3}>
-            <Typography variant="h6">Теги</Typography>
-            <Box display="flex" flexWrap="wrap" gap={1}>
+            <Typography variant="h6" fontSize={theme.fontSizes.xs}>
+              Теги
+            </Typography>
+            <Box display="flex" flexWrap="wrap" gap={1} fontSize={theme.fontSizes.xxs}>
               {product.tags.map((tag, index) => (
                 <Chip key={index} label={tag} variant="outlined" />
               ))}
