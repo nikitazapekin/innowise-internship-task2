@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-import { API_BASE_URL } from "@api/api";
+export const API_BASE_URL = process.env.REACT_APP_API_URL;
 
 export interface Product {
   id: number;
@@ -63,15 +63,13 @@ export const productsApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: API_BASE_URL,
   }),
-  tagTypes: ["Product"],
+
   endpoints: (builder) => ({
     getProducts: builder.query<ProductsResponse, void>({
       query: () => "/products",
-      providesTags: ["Product"],
     }),
     getProductById: builder.query<Product, number>({
       query: (id) => `/products/${id}`,
-      providesTags: (result, error, id) => [{ type: "Product", id }],
     }),
     searchProducts: builder.query<ProductsResponse, string>({
       query: (searchTerm) => `/products/search?q=${searchTerm}`,
