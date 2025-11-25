@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { Box, Card, CardContent, CardMedia, Chip, Rating, Stack, Typography } from "@mui/material";
 import theme from "@styles/theme";
 
-import type { Product } from "@store/slices/productSlice";
+import type { Product } from "@store/api/products";
 
 interface ProductCardProps {
   product: Product;
