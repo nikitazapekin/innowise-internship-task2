@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useRouteParams } from "@hooks/useRouteParams";
 import {
   Alert,
   Box,
@@ -18,7 +18,8 @@ import theme from "@styles/theme";
 import { useGetProductByIdQuery } from "@store/api/products";
 
 const CardDetails = () => {
-  const { id } = useParams<{ id: string }>();
+  const { id, isError } = useRouteParams();
+
   const { data: product, error, isLoading } = useGetProductByIdQuery(Number(id));
 
   if (isLoading) {
@@ -29,7 +30,7 @@ const CardDetails = () => {
     );
   }
 
-  if (error || !product) {
+  if (error || !product || isError) {
     return (
       <Container
         maxWidth={false}
@@ -100,7 +101,7 @@ const CardDetails = () => {
         <Box>
           <Typography
             variant="h3"
-            component="h1"
+            component="h3"
             gutterBottom
             sx={{
               fontFamily: theme.fontFamilies.primary,
@@ -171,7 +172,7 @@ const CardDetails = () => {
               Габариты
             </Typography>
             <Box
-              sx={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 2 }}
+              sx={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 2 }}
               fontSize={theme.fontSizes.xxs}
             >
               <Box>

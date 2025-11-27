@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { Box, Card, CardContent, CardMedia, Chip, Rating, Stack, Typography } from "@mui/material";
+import { Card, CardContent, CardMedia, Chip, Rating, Stack, Typography } from "@mui/material";
 import theme from "@styles/theme";
 
 import type { Product } from "@store/api/products";
@@ -40,7 +40,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
       <CardContent sx={{ flexGrow: 1, display: "flex", flexDirection: "column" }}>
         <Typography
           gutterBottom
-          variant="h6"
+          variant="h3"
           component="h3"
           textAlign={"center"}
           sx={{
@@ -53,7 +53,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
         </Typography>
 
         <Stack flexDirection={"row"} justifyContent={"space-between"}>
-          <Box sx={{ mb: 1 }} flexDirection={"row"}>
+          <Stack sx={{ mb: 1 }} flexDirection={"row"}>
             <Rating value={product.rating} readOnly precision={0.1} />
             <Typography
               variant="body2"
@@ -62,10 +62,13 @@ const ProductCard = ({ product }: ProductCardProps) => {
             >
               {product.rating}
             </Typography>
-          </Box>
+          </Stack>
 
-          <Box
-            sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", mb: 1 }}
+          <Stack
+            flexDirection={"row"}
+            alignItems={"center"}
+            justifyContent={"space-between"}
+            sx={{ mb: 1 }}
           >
             <Typography
               variant="h6"
@@ -76,7 +79,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
             >
               ${product.price}
             </Typography>
-          </Box>
+          </Stack>
         </Stack>
 
         <Typography variant="body2" sx={{ fontSize: theme.fontSizes.xs }}>

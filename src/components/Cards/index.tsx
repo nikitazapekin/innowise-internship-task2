@@ -57,7 +57,7 @@ const Cards = () => {
     >
       <Typography
         variant="h4"
-        component="h1"
+        component="h4"
         gutterBottom
         sx={{
           fontFamily: theme.fontFamilies.primary,
