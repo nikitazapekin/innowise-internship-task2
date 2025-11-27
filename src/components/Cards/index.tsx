@@ -1,5 +1,5 @@
 import ProductCard from "@components/Card";
-import { Alert, Box, CircularProgress, Container, Typography } from "@mui/material";
+import { Alert, Box, CircularProgress, Container, Stack, Typography } from "@mui/material";
 import theme from "@styles/theme";
 
 import { useGetProductsQuery } from "@store/api/products";
@@ -9,9 +9,9 @@ const Cards = () => {
 
   if (isLoading) {
     return (
-      <Box display="flex" justifyContent="center" alignItems="center" minHeight="400px">
+      <Stack justifyContent="center" alignItems="center" minHeight="400px">
         <CircularProgress />
-      </Box>
+      </Stack>
     );
   }
 

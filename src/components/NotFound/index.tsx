@@ -29,8 +29,8 @@ const NotFound = () => {
       }}
     >
       <Typography
-        variant="h1"
-        component="h1"
+        variant="h2"
+        component="h2"
         align="center"
         gutterBottom
         sx={{

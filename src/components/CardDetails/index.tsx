@@ -11,6 +11,7 @@ import {
   ListItemText,
   Paper,
   Rating,
+  Stack,
   Typography,
 } from "@mui/material";
 import theme from "@styles/theme";
@@ -24,9 +25,9 @@ const CardDetails = () => {
 
   if (isLoading) {
     return (
-      <Box display="flex" justifyContent="center" alignItems="center" minHeight="400px">
+      <Stack justifyContent="center" alignItems="center" sx={{ minHeight: "400px" }}>
         <CircularProgress />
-      </Box>
+      </Stack>
     );
   }
 
@@ -77,7 +78,7 @@ const CardDetails = () => {
           />
 
           {product.images.length > 1 && (
-            <Box sx={{ display: "flex", gap: 1, overflowX: "auto" }}>
+            <Stack direction="row" spacing={1} sx={{ overflowX: "auto" }}>
               {product.images.map((image, index) => (
                 <CardMedia
                   key={index}
@@ -94,7 +95,7 @@ const CardDetails = () => {
                   }}
                 />
               ))}
-            </Box>
+            </Stack>
           )}
         </Box>
 
@@ -111,18 +112,18 @@ const CardDetails = () => {
             {product.title}
           </Typography>
 
-          <Box display="flex" alignItems="center" mb={2}>
+          <Stack alignItems="center" flexDirection={"row"} mb={2}>
             <Rating value={product.rating} readOnly precision={0.1} />
             <Typography variant="body1" fontSize={theme.fontSizes.sm} sx={{ ml: 1 }}>
               {product.rating}
             </Typography>
-          </Box>
+          </Stack>
 
-          <Box display="flex" alignItems="center" gap={2} mb={3}>
+          <Stack alignItems="center" flexDirection={"row"} gap={2} mb={3}>
             <Typography variant="h4" fontSize={theme.fontSizes.sm} color="primary">
               ${product.price}
             </Typography>
-          </Box>
+          </Stack>
 
           <Typography variant="body1" fontSize={theme.fontSizes.sm}>
             {product.description}
@@ -200,11 +201,11 @@ const CardDetails = () => {
             <Typography variant="h6" fontSize={theme.fontSizes.xs}>
               Теги
             </Typography>
-            <Box display="flex" flexWrap="wrap" gap={1} fontSize={theme.fontSizes.xxs}>
+            <Stack flexWrap="wrap" gap={1} fontSize={theme.fontSizes.xxs}>
               {product.tags.map((tag, index) => (
                 <Chip key={index} label={tag} variant="outlined" />
               ))}
-            </Box>
+            </Stack>
           </Box>
         </Box>
       </Box>
@@ -254,10 +255,10 @@ const CardDetails = () => {
                     pb: 2,
                   }}
                 >
-                  <Box display="flex" justifyContent="space-between" alignItems="center" mb={1}>
+                  <Stack justifyContent="space-between" alignItems="center" mb={1}>
                     <Typography variant="subtitle2">{review.reviewerName}</Typography>
                     <Rating value={review.rating} />
-                  </Box>
+                  </Stack>
                   <Typography variant="body2" color={theme.colors.black}>
                     {review.comment}
                   </Typography>

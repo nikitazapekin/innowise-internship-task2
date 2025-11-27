@@ -1,4 +1,4 @@
-import { Box, Button, Paper, Typography } from "@mui/material";
+import { Button, Paper, Stack, Typography } from "@mui/material";
 import theme from "@styles/theme";
 
 import { useAppDispatch } from "@store/redux";
@@ -21,20 +21,20 @@ const Header = () => {
         color: theme.colors.white,
       }}
     >
-      <Box
+      <Stack
+        flexDirection={"row"}
+        alignItems={"space-between"}
+        justifyContent={"space-between"}
         sx={{
           maxWidth: theme.containers.lg,
           width: "100%",
           margin: "0 auto",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
           px: theme.spaces.xxs,
         }}
       >
         <Typography
           variant="h4"
-          component="h1"
+          component="h4"
           sx={{
             fontFamily: theme.fontFamilies.primary,
             fontSize: theme.fontSizes.md,
@@ -50,12 +50,13 @@ const Header = () => {
             borderColor: theme.colors.white,
             fontSize: theme.fontSizes.xxs,
             fontFamily: theme.fontFamilies.primary,
+            alignSelf: "flex-end",
           }}
           onClick={handleLogout}
         >
           Выйти
         </Button>
-      </Box>
+      </Stack>
     </Paper>
   );
 };
