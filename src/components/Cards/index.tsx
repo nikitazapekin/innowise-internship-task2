@@ -60,9 +60,6 @@ const Cards = () => {
         component="h4"
         gutterBottom
         sx={{
-          fontFamily: theme.fontFamilies.primary,
-          fontSize: theme.fontSizes.lg,
-          fontWeight: "bold",
           mb: 4,
           textAlign: "center",
         }}

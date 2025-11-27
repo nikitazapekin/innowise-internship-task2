@@ -100,108 +100,73 @@ const CardDetails = () => {
         </Box>
 
         <Box>
-          <Typography
-            variant="h3"
-            component="h3"
-            gutterBottom
-            sx={{
-              fontFamily: theme.fontFamilies.primary,
-              fontSize: theme.fontSizes.md,
-            }}
-          >
+          <Typography variant="h3" component="h3" gutterBottom>
             {product.title}
           </Typography>
 
           <Stack alignItems="center" flexDirection={"row"} mb={2}>
             <Rating value={product.rating} readOnly precision={0.1} />
-            <Typography variant="body1" fontSize={theme.fontSizes.sm} sx={{ ml: 1 }}>
+            <Typography variant="body1" sx={{ ml: 1 }}>
               {product.rating}
             </Typography>
           </Stack>
 
           <Stack alignItems="center" flexDirection={"row"} gap={2} mb={3}>
-            <Typography variant="h4" fontSize={theme.fontSizes.sm} color="primary">
-              ${product.price}
-            </Typography>
+            <Typography variant="h4">${product.price}</Typography>
           </Stack>
 
-          <Typography variant="body1" fontSize={theme.fontSizes.sm}>
-            {product.description}
-          </Typography>
+          <Typography variant="body1">{product.description}</Typography>
 
           <Paper elevation={2} sx={{ p: 3, mb: 3 }}>
-            <Typography variant="h6" fontSize={theme.fontSizes.xs}>
-              Основные характеристики
-            </Typography>
+            <Typography variant="h6">Основные характеристики</Typography>
             <Box
               sx={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 2 }}
               fontSize={theme.fontSizes.xxs}
             >
               <Box>
-                <Typography color={theme.colors.black}>Бренд:</Typography>
+                <Typography>Бренд:</Typography>
                 <Typography variant="body1">{product.brand}</Typography>
               </Box>
               <Box>
-                <Typography variant="body2" color={theme.colors.black}>
-                  Категория:
-                </Typography>
+                <Typography variant="body2">Категория:</Typography>
                 <Typography variant="body1">{product.category}</Typography>
               </Box>
               <Box>
-                <Typography variant="body2" color={theme.colors.black}>
-                  В наличии:
-                </Typography>
+                <Typography variant="body2">В наличии:</Typography>
                 <Typography variant="body1">{product.stock} шт.</Typography>
               </Box>
               <Box>
-                <Typography variant="body2" color={theme.colors.black}>
-                  SKU:
-                </Typography>
+                <Typography variant="body2">SKU:</Typography>
                 <Typography variant="body1">{product.sku}</Typography>
               </Box>
               <Box>
-                <Typography variant="body2" color={theme.colors.black}>
-                  Вес:
-                </Typography>
+                <Typography variant="body2">Вес:</Typography>
                 <Typography variant="body1">{product.weight} units</Typography>
               </Box>
             </Box>
           </Paper>
 
           <Paper elevation={2} sx={{ p: 3, mb: 3 }}>
-            <Typography variant="h6" fontSize={theme.fontSizes.xs}>
-              Габариты
-            </Typography>
-            <Box
-              sx={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 2 }}
-              fontSize={theme.fontSizes.xxs}
-            >
+            <Typography variant="h6">Габариты</Typography>
+            <Box sx={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 2 }}>
               <Box>
-                <Typography variant="body2" color={theme.colors.black}>
-                  Ширина:
-                </Typography>
+                <Typography variant="body2">Ширина:</Typography>
                 <Typography variant="body1">{product.dimensions.width} cm</Typography>
               </Box>
               <Box>
-                <Typography variant="body2" color={theme.colors.black}>
-                  Высота:
-                </Typography>
+                <Typography variant="body2">Высота:</Typography>
                 <Typography variant="body1">{product.dimensions.height} cm</Typography>
               </Box>
               <Box>
-                <Typography variant="body2" color={theme.colors.black}>
-                  Глубина:
-                </Typography>
+                <Typography variant="body2">Глубина:</Typography>
                 <Typography variant="body1">{product.dimensions.depth} cm</Typography>
               </Box>
             </Box>
           </Paper>
 
           <Box mb={3}>
-            <Typography variant="h6" fontSize={theme.fontSizes.xs}>
-              Теги
-            </Typography>
-            <Stack flexWrap="wrap" gap={1} fontSize={theme.fontSizes.xxs}>
+            <Typography variant="h6">Теги</Typography>
+            <Stack flexWrap="wrap" gap={1}>
               {product.tags.map((tag, index) => (
                 <Chip key={index} label={tag} variant="outlined" />
               ))}

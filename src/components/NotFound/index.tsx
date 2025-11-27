@@ -28,15 +28,7 @@ const NotFound = () => {
         textAlign: "center",
       }}
     >
-      <Typography
-        variant="h2"
-        component="h2"
-        align="center"
-        gutterBottom
-        sx={{
-          color: theme.palette.text.secondary,
-        }}
-      >
+      <Typography variant="h2" component="h2" align="center" gutterBottom>
         404
       </Typography>
 

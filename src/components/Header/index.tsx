@@ -29,17 +29,10 @@ const Header = () => {
           maxWidth: theme.containers.lg,
           width: "100%",
           margin: "0 auto",
-          px: theme.spaces.xxs,
+          px: (theme) => theme.spaces.xxs,
         }}
       >
-        <Typography
-          variant="h4"
-          component="h4"
-          sx={{
-            fontFamily: theme.fontFamilies.primary,
-            fontSize: theme.fontSizes.md,
-          }}
-        >
+        <Typography variant="h1" component="h1">
           Dummy App
         </Typography>
 

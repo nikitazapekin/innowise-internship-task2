@@ -44,8 +44,6 @@ const ProductCard = ({ product }: ProductCardProps) => {
           component="h3"
           textAlign={"center"}
           sx={{
-            fontSize: theme.fontSizes.sm,
-            fontFamily: theme.fontFamilies.primary,
             mb: 1,
           }}
         >
@@ -55,11 +53,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
         <Stack flexDirection={"row"} justifyContent={"space-between"}>
           <Stack sx={{ mb: 1 }} flexDirection={"row"}>
             <Rating value={product.rating} readOnly precision={0.1} />
-            <Typography
-              variant="body2"
-              color={theme.colors.black}
-              sx={{ fontSize: theme.fontSizes.xs, ml: 1 }}
-            >
+            <Typography variant="body2" sx={{ ml: 1 }}>
               {product.rating}
             </Typography>
           </Stack>
@@ -70,27 +64,15 @@ const ProductCard = ({ product }: ProductCardProps) => {
             justifyContent={"space-between"}
             sx={{ mb: 1 }}
           >
-            <Typography
-              variant="h6"
-              color="primary"
-              sx={{
-                fontSize: theme.fontSizes.xs,
-              }}
-            >
+            <Typography variant="h6" color="primary">
               ${product.price}
             </Typography>
           </Stack>
         </Stack>
 
-        <Typography variant="body2" sx={{ fontSize: theme.fontSizes.xs }}>
-          В наличии: {product.stock}
-        </Typography>
+        <Typography variant="body2">В наличии: {product.stock}</Typography>
 
-        <Chip
-          label={product.category}
-          variant="outlined"
-          sx={{ mt: 1, fontSize: theme.fontSizes.xs, alignSelf: "flex-start" }}
-        />
+        <Chip label={product.category} variant="outlined" sx={{ mt: 1, alignSelf: "flex-start" }} />
       </CardContent>
     </Card>
   );

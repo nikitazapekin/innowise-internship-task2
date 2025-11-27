@@ -114,12 +114,10 @@ const SignUp = () => {
             <Stack height={30} alignItems="center" justifyContent="center">
               {(errors.password || errors.email || errors.confirmPassword) && (
                 <Typography
-                  variant="inherit"
+                  variant="body2"
                   component="p"
                   sx={{
-                    color: theme.colors.danger,
                     textAlign: "center",
-                    fontSize: theme.fontSizes.xxs,
                   }}
                 >
                   {errors.password?.message ||

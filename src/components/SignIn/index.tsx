@@ -101,9 +101,7 @@ const SignIn = () => {
                   variant="inherit"
                   component="p"
                   sx={{
-                    color: theme.colors.danger,
                     textAlign: "center",
-                    fontSize: theme.fontSizes.xxs,
                   }}
                 >
                   {errors.password?.message || errors.email?.message}
