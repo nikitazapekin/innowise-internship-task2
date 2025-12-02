@@ -1,5 +1,7 @@
+import CardDetails from "@components/CardDetails";
+
 const CardPage = () => {
-  return <>Cards</>;
+  return <CardDetails />;
 };
 
 export default CardPage;

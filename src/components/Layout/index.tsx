@@ -1,8 +1,35 @@
-import { Outlet } from "react-router-dom";
-import { Container, useTheme } from "@mui/material";
+import { Outlet, useLocation } from "react-router-dom";
+import Header from "@components/Header";
+import { Container, Stack, useTheme } from "@mui/material";
 
 const Layout = () => {
   const theme = useTheme();
+  const location = useLocation();
+
+  const isCardRoute = location.pathname.includes("card") || location.pathname.includes("cards");
+
+  if (isCardRoute) {
+    return (
+      <Stack
+        sx={{
+          minHeight: "100vh",
+          width: "100%",
+        }}
+        className="wrapper"
+      >
+        <Header />
+        <Stack
+          component="main"
+          sx={{
+            flex: "1 1 auto",
+          }}
+          className="content"
+        >
+          <Outlet />
+        </Stack>
+      </Stack>
+    );
+  }
 
   return (
     <Container
@@ -20,7 +47,16 @@ const Layout = () => {
         backgroundColor: theme.palette.background.default,
       }}
     >
-      <Outlet />
+      <Stack
+        alignItems="center"
+        justifyContent="center"
+        sx={{
+          width: "100%",
+          minHeight: "100vh",
+        }}
+      >
+        <Outlet />
+      </Stack>
     </Container>
   );
 };

@@ -8,6 +8,8 @@ const theme = createTheme({
     main: "#1976d2",
     light: "#42a5f5",
     dark: "#1565c0",
+    white: "#fff",
+    black: "#000",
   },
 
   fontFamilies: {
@@ -44,6 +46,44 @@ const theme = createTheme({
     xl: 100,
     xxl: 200,
     xxxl: 300,
+  },
+
+  typography: {
+    fontFamily: '"Inter", sans-serif',
+    h1: {
+      fontSize: 32,
+      fontWeight: 600,
+    },
+    h2: {
+      fontSize: 28,
+      fontWeight: 600,
+    },
+    h3: {
+      fontSize: 24,
+      fontWeight: 600,
+    },
+    h4: {
+      fontSize: 20,
+      fontWeight: 500,
+    },
+    h5: {
+      fontSize: 18,
+      fontWeight: 500,
+    },
+    h6: {
+      fontSize: 16,
+      fontWeight: 500,
+    },
+    body1: {
+      fontSize: 16,
+      fontWeight: 700,
+      lineHeight: 1.5,
+    },
+    body2: {
+      fontSize: 14,
+      fontWeight: 400,
+      lineHeight: 1.4,
+    },
   },
 });
 
