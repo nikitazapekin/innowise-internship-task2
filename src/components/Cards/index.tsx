@@ -56,7 +56,6 @@ const Cards = () => {
       }}
     >
       <Typography
-        variant="h4"
         component="h4"
         gutterBottom
         sx={{

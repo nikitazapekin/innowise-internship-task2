@@ -11,7 +11,6 @@ const Layout = () => {
   if (isCardRoute) {
     return (
       <Stack
-        direction="column"
         sx={{
           minHeight: "100vh",
           width: "100%",
@@ -21,7 +20,6 @@ const Layout = () => {
         <Header />
         <Stack
           component="main"
-          direction="column"
           sx={{
             flex: "1 1 auto",
           }}
@@ -50,7 +48,6 @@ const Layout = () => {
       }}
     >
       <Stack
-        direction="column"
         alignItems="center"
         justifyContent="center"
         sx={{
